@@ -3,10 +3,23 @@
 
 #I "build"
 #r "neo4jtypeprovider.dll"
+#r "Neo4jClient.dll"
+
+open System
 open Haumohio.Neo4j
+open Neo4jClient
 
+[<Literal>]
+let connectionstring = @"http://localhost:7474/db/data"
 
-// Define your library scripting code here
-type test = Joe.Cool<"a">
-let qqq = test.Proxies.Jack()
-qqq
+type schema = Haumohio.Neo4j.Schema<connectionstring>
+let db = new Neo4jClient.GraphClient(Uri(connectionstring))
+db.Connect()
+
+db.Cypher
+  .Match("(p:" + schema.Person.NAME + ")")
+  .Where( "p.born=1973" )
+  .Return<schema.Proxies.Person>("p")
+  .Limit(Nullable<int>(10))
+  .Results
+  |> Seq.toList

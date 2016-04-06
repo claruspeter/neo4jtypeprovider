@@ -1,16 +1,16 @@
-﻿module internal Haumohio.Neo4j.graph
+﻿module Haumohio.Neo4j.graph
 
 open System
 open Neo4jClient
 open Newtonsoft.Json
 
-let internal Connect connectionstring = 
-    let a = Neo4jClient.GraphClient(Uri(connectionstring  ))  //"http://localhost:7474/db/data"
+let Connect connectionstring =
+    let a = new Neo4jClient.GraphClient(Uri(connectionstring  ))  //"http://localhost:7474/db/data"
     a.Connect()
     a
 
-let internal propNames (nodeName:string) (neo:GraphClient) = 
-    let data = 
+let propNames (nodeName:string) (neo:GraphClient) =
+    let data =
         neo.Cypher
             .Match("(n:"+ nodeName + ")")
             .Return<Neo4jClient.Node<string>>("n")
@@ -27,7 +27,7 @@ let internal propNames (nodeName:string) (neo:GraphClient) =
         |> List.ofSeq
 
 
-let internal findNodes (neo:GraphClient): string list=
+let findNodes (neo:GraphClient): string list=
     neo.Cypher
         .Match("n")
         .With("DISTINCT labels(n) as labels")
@@ -37,7 +37,7 @@ let internal findNodes (neo:GraphClient): string list=
         .Results
         |> List.ofSeq
 
-let internal findRels (neo:GraphClient): string list=
+let findRels (neo:GraphClient): string list=
     neo.Cypher
         .Match("a-[r]-b")
         .With("DISTINCT type(r) as label")
@@ -47,7 +47,7 @@ let internal findRels (neo:GraphClient): string list=
         |> List.ofSeq
 
 // some extension methods to facilitate flow
-type internal Neo4jClient.GraphClient with
+type Neo4jClient.GraphClient with
     member this.labelList = findNodes this
     member this.relList = findRels this
     member this.propList nodeName = propNames nodeName this
