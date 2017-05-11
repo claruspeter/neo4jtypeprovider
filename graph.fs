@@ -5,7 +5,6 @@ open Neo4jClient
 open Newtonsoft.Json
 
 let Connect connectionstring user pwd =
-    printfn "Connection to %A with user %A and pwd %A" connectionstring user pwd
     let a = new Neo4jClient.GraphClient(Uri(connectionstring), user, pwd)  //"http://localhost:7474/db/data"
     a.Connect()
     a
