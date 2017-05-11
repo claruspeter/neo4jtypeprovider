@@ -4,8 +4,9 @@ open System
 open Neo4jClient
 open Newtonsoft.Json
 
-let Connect connectionstring =
-    let a = new Neo4jClient.GraphClient(Uri(connectionstring  ))  //"http://localhost:7474/db/data"
+let Connect connectionstring user pwd =
+    printfn "Connection to %A with user %A and pwd %A" connectionstring user pwd
+    let a = new Neo4jClient.GraphClient(Uri(connectionstring), user, pwd)  //"http://localhost:7474/db/data"
     a.Connect()
     a
 
@@ -29,7 +30,7 @@ let propNames (nodeName:string) (neo:GraphClient) =
 
 let findNodes (neo:GraphClient): string list=
     neo.Cypher
-        .Match("n")
+        .Match("(n)")
         .With("DISTINCT labels(n) as labels")
         .Unwind("labels", "label")
         .ReturnDistinct<string>("label")
@@ -39,7 +40,7 @@ let findNodes (neo:GraphClient): string list=
 
 let findRels (neo:GraphClient): string list=
     neo.Cypher
-        .Match("a-[r]-b")
+        .Match("(a)-[r]-(b)")
         .With("DISTINCT type(r) as label")
         .ReturnDistinct<string>("label")
         .OrderBy("label")
