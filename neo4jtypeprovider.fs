@@ -5,9 +5,9 @@ open Haumohio.Neo4j.graph
 
 let private paras = 
   [
-    {name="ConnectionString"; coltype=typeof<string>}
-    {name="User"; coltype=typeof<string>}
-    {name="Pwd"; coltype=typeof<string>}
+    {name="ConnectionString"; paratype=typeof<string>}
+    {name="User"; paratype=typeof<string>}
+    {name="Pwd"; paratype=typeof<string>}
   ]
 
 let private buildProvider connectionstring user pwd =
@@ -31,7 +31,7 @@ let private loaddata (parameterValues:obj[]) =
 
 [<Microsoft.FSharp.Core.CompilerServices.TypeProvider>]
 type Neo4jTypeProvider(config) =
-  inherit metatp.MetaProvider(config, "Haumohio.Neo4j","Schema", paras, loaddata )
+  inherit metatp.MetaProvider(config, { nameSpace = "Haumohio.Neo4j"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
 
 
 [<assembly:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssembly>]
