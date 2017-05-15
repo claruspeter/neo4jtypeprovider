@@ -1,6 +1,6 @@
 module Haumohio.Neo4j.core
 open Microsoft.FSharp.Core.CompilerServices
-open metatp
+open MetaTp
 open Haumohio.Neo4j.graph
 
 let private paras = 
@@ -31,7 +31,7 @@ let private loaddata (parameterValues:obj[]) =
 
 [<Microsoft.FSharp.Core.CompilerServices.TypeProvider>]
 type Neo4jTypeProvider(config) =
-  inherit metatp.MetaProvider(config, { nameSpace = "Haumohio.Neo4j"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
+  inherit MetaTp.MetaProvider(config, { nameSpace = "Haumohio.Neo4j"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
 
 
 [<assembly:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssembly>]
