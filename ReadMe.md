@@ -10,29 +10,30 @@ entities that exist in a Neo4j database, without the need for matching code prox
 
 ### Nuget
 
-[Install-Package Neo4jTypeProvider](https://nuget.org/packages/Neo4jTypeProvider)
+[Install-Package Neo4j.TypeProvider](https://nuget.org/packages/Neo4j.TypeProvider)
 
 ### Code Examples
 ```fsharp
     //#r "neo4jtypeprovider.dll"
     //#r "Neo4jClient.dll"
 
-    open System
-    open Haumohio.Neo4j
-    open Neo4jClient
-
     [<Literal>]
     let connectionstring = @"http://localhost:7474/db/data"
+    [<Literal>]
+    let user = @"neo4j"
+    [<Literal>]
+    let pwd = @"password"
 
-    type schema = Haumohio.Neo4j.Schema<connectionstring>
-    let db = new Neo4jClient.GraphClient(Uri(connectionstring))
+    type schema = Neo4j.TypeProvider.Schema<ConnectionString=connectionstring, User=user, Pwd=pwd>
+    let db = new Neo4jClient.GraphClient(Uri(connectionstring), user, pwd)
     db.Connect()
 
     db.Cypher
-      .Match("(p:" + schema.Person.NAME + ")")
-      .Where( "p.born=1973" )
-      .Return<schema.Proxies.Person>("p")
-      .Limit(Nullable<int>(10))
-      .Results
-      |> Seq.toList
+        .Match("(p:" + schema.Person.NAME + ")")
+        .Where( "p.born<>1973" )
+        .Return<schema.Person.Proxy>("p")
+        .Limit(Nullable<int>(10))
+        .Results
+        |> Seq.toList
+
 ```
