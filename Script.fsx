@@ -6,7 +6,6 @@
 #r "Neo4jClient.dll"
 
 open System
-open Haumohio.Neo4j
 open Neo4jClient
 
 [<Literal>]
@@ -14,9 +13,9 @@ let connectionstring = @"http://localhost:7474/db/data"
 [<Literal>]
 let u = @"neo4j"
 [<Literal>]
-let p = @"neo4j"
+let p = @"password"
 
-type schema = Haumohio.Neo4j.Schema<ConnectionString=connectionstring, User=u, Pwd=p>
+type schema = Neo4j.TypeProvider.Schema<ConnectionString=connectionstring, User=u, Pwd=p>
 let db = new Neo4jClient.GraphClient(Uri(connectionstring), u, p)
 db.Connect()
 
@@ -24,7 +23,7 @@ let aaa =
   db.Cypher
     .Match("(p:" + schema.Person.NAME + ")")
     .Where( "p.born<>1973" )
-    .Return<schema.Proxies.Person>("p")
+    .Return<schema.Person.Proxy>("p")
     .Limit(Nullable<int>(10))
     .Results
     |> Seq.toList

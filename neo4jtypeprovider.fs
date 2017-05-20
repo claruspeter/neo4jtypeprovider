@@ -1,7 +1,7 @@
-module Haumohio.Neo4j.core
+module Neo4j.TypeProvider.Core
 open Microsoft.FSharp.Core.CompilerServices
 open MetaTp
-open Haumohio.Neo4j.graph
+open Neo4j.TypeProvider.Graph
 
 let private paras = 
   [
@@ -11,7 +11,7 @@ let private paras =
   ]
 
 let private buildProvider connectionstring user pwd =
-    let neo = Haumohio.Neo4j.graph.Connect connectionstring user pwd
+    let neo = Neo4j.TypeProvider.Graph.Connect connectionstring user pwd
     let relTables =
       neo.relList
       |> List.map (fun nm -> {name=nm; columns=[||]} )
@@ -31,7 +31,7 @@ let private loaddata (parameterValues:obj[]) =
 
 [<Microsoft.FSharp.Core.CompilerServices.TypeProvider>]
 type Neo4jTypeProvider(config) =
-  inherit MetaTp.MetaProvider(config, { nameSpace = "Haumohio.Neo4j"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
+  inherit MetaTp.MetaProvider(config, { nameSpace = "Neo4j.TypeProvider"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
 
 
 [<assembly:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssembly>]

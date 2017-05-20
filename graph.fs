@@ -1,4 +1,4 @@
-﻿module Haumohio.Neo4j.graph
+﻿module Neo4j.TypeProvider.Graph
 
 open System
 open Neo4jClient
