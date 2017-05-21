@@ -40,22 +40,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-    <Reference Include="metatp">
-        <HintPath>packages\MetaTp\lib\net45\metatp.dll</HintPath>
-    </Reference>
-    <Reference Include="Neo4jClient">
-      <HintPath>packages\Neo4jClient\lib\net45\Neo4jClient.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="graph.fs" />
-    <Compile Include="neo4jtypeprovider.fs" />
-    <None Include="Script.fsx" />
+    <Compile Include="TpHeader.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

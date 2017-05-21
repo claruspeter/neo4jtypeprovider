@@ -34,5 +34,3 @@ type Neo4jTypeProvider(config) =
   inherit MetaTp.MetaProvider(config, { nameSpace = "Neo4j.TypeProvider"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
 
 
-[<assembly:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssembly>]
-do ()

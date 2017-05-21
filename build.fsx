@@ -45,9 +45,11 @@ Target "CreatePackage" (fun _ ->
       OutputPath = packagedDir
       WorkingDir = "."
       Summary = "A type provider for providing the schema of a Neo4j database, and proxies for it's Nodes"
-      Version = "0.2"
+      Version = "0.3"
       Publish = false
-      Files = [(@"build/neo4jtypeprovider.dll", Some @"lib/net45", None) ]
+      Files = [(@"build/neo4jtypeprovider.dll", Some @"lib/net45", None) 
+               (@"build/Neo4j.Typeprovider.DesignTime.dll", Some @"lib/net45", None) 
+              ]
       Dependencies =
             ["MetaTp", GetPackageVersion "./packages/" "MetaTp"
              "Neo4jClient", GetPackageVersion "./packages/" "Neo4jClient"
