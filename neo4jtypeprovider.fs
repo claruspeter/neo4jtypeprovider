@@ -34,13 +34,13 @@ let private loaddata (parameterValues:obj[]) =
     buildProvider connectionstring user pwd
   | _ -> failwith "connection string not specified"
 
-let private TweakConfig (config: TypeProviderConfig) =
-  printfn "FOLDER!! %A\n" config.ResolutionFolder
-  printfn "ASS!! %A\n" config.RuntimeAssembly
-  config
-
 [<Microsoft.FSharp.Core.CompilerServices.TypeProvider>]
 type Neo4jTypeProvider(config) =
-  inherit MetaTp.MetaProvider(TweakConfig(config), { nameSpace = "Neo4j.TypeProvider"; typeName = "Schema"; yourTypeParameters = paras; schemaFromParameters = loaddata } )
-
-
+  inherit MetaTp.MetaProvider(
+    config, 
+    { 
+        nameSpace = "Neo4j.TypeProvider"; 
+        typeName = "Schema"; 
+        yourTypeParameters = paras; 
+        schemaFromParameters = loaddata 
+    })
